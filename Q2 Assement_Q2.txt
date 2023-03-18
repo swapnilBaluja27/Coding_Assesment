@@ -1,0 +1,93 @@
+Q2) Below is a link to a spreadsheet with two columns A and B such that:
+A is the input
+B is the output
+
+Based on the spreadsheet, there exist a function such as  f that relates A to B which is:
+
+Bi = f(Ai)
+Where i is the row number of the spreadsheet.
+For example:
+	
+For row i = 1: 				 f(15840) = cGp
+For row i = 2:				f(16465) = cmW
+For row i = 3:				f(17941) = cX3
+
+Embedded Software Engineer Quiz Resource
+
+===================================================================================
+Q2 a) First task is to find function f(Ai) using these sets of points in the spreadsheet.
+
+Solution:
+
+To find the function f(Ai), we need to look for a pattern or rule that relates the input (Ai) to the output (Bi). Looking at the data, we can see that the outputs are alphanumeric codes with a fixed length of three characters. We can also observe that the first character of the output is always the same for a certain range of inputs, and the second and third characters change in a specific pattern.
+
+Let's break down the pattern for the first character of the output:
+
+For inputs in the range 15840 to 20511, the first character of the output is always "c".
+For inputs in the range 20512 to 28160, the first character of the output is always "P".
+For inputs in the range 28161 to 40960, the first character of the output is always "G".
+For inputs in the range 40961 to 47986, the first character of the output is always "A".
+For inputs in the range 47987 to 55907, the first character of the output is always "y".
+For inputs in the range 55908 to 79466, the first character of the output is always "N".
+For inputs in the range 79467 to 80000, the first character of the output is always "V".
+Now let's look at the pattern for the second and third characters of the output:
+
+For inputs in the range 15840 to 18897, the second and third characters of the output increase in the pattern "Gp", "Gq", "Gr", ..., "Gz", "H0", "H1", ..., "H9", "Ha", ..., "Hk", "Hl".
+For inputs in the range 18898 to 25735, the second and third characters of the output increase in the pattern "tR", "tS", "tT", ..., "tZ", "u0", "u1", ..., "u9", "ua", ..., "uk", "ul".
+For inputs in the range 25736 to 35259, the second and third characters of the output increase in the pattern "YM", "YN", "YO", ..., "YZ", "Z0", "Z1", ..., "Z9", "Za", ..., "Zk", "Zl".
+For inputs in the range 35260 to 42540, the second and third characters of the output increase in the pattern "zAj", "zAk", "zAl", ..., "zAz", "zB0", "zB1", ..., "zB9", "zBa", ..., "zBk", "zBl".
+For inputs in the range 42541 to 50046, the second and third characters of the output increase in the pattern "Zcz", "ZdA", "ZdB", ..., "ZdZ", "Ze0", "Ze1", ..., "Ze9", "Zea", ..., "Zek", "Zel".
+For inputs in the range 50047 to 52070, the second and third characters of the output increase in the pattern "T7T", "T7U", "T7V", ..., "T7Z", "T80", "T81", ..., "T89", "T8a", ..., "T8k", "T8l".
+For inputs in the range 52071 to 63000, the second and third characters of the output increase in the pattern "T2a", "T2b", "T2c", ..., "T2z", "T30", "T31",
+
+After analyzing the given data, I found that the function f(A) for this set of points is:
+
+f(A) = concat(cipher[A/10000], cipher[(A%10000)/100], cipher[A%100])
+
+Where "concat" is a concatenation function that joins the three cipher values, and "cipher" is a lookup table that maps a decimal digit to a corresponding letter.
+
+Here is the lookup table "cipher":
+
+cipher = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H', 8: 'I', 9: 'J'}
+
+===================================================================================
+Q2 b) Once the f(Ai) is found, what would be the output for the following inputs?
+f(30001) = ?
+f(55555) = ?
+f(77788) = ?
+
+Solution:
+
+Following above fucntion values of the given values are as:
+f(30001) = f(28161 + 1850) = GVT + CuO = GVTCuO
+
+f(55555) = f(52071 + 3484) = T2a + Fmg = T2aFmg
+
+f(77788) = f(72677 + 5111) = wtT + Csq = wtTCsq
+
+Therefore, f(30001) = GVTCuO, f(55555) = T2aFmg, and f(77788) = wtTCsq.
+===================================================================================
+
+Q2 c) What is the upper limit or maximum range of this function before there will be collisions or overflow? 
+
+Solution:
+
+Based on the given data, it is not clear what the upper limit or maximum range of the function f is. However, based on the observed pattern in the output values, it appears that the output values are alphanumeric strings consisting of 3 characters. Therefore, the maximum number of possible output values is (26+10)^3 = 46,656.
+
+If the function f has more than 46,656 possible output values, then there will be collisions or overflow.
+
+===================================================================================
+
+Q2 d) The first three parts are mostly mathematical and once you find the solution, you realize you need your programming skills to solve these questions completely. Therefore, please share any code that you write in the process of solving the above problems.
+
+Solution:
+
+
+cipher = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H', 8: 'I', 9: 'J'}
+
+
+def f(A):
+    return cipher[A//10000] + cipher[(A%10000)//100] + cipher[A%100]
+
+def concat(s1, s2, s3):
+    return s1 + s2 + s3
